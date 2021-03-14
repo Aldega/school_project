@@ -41,9 +41,16 @@ class LinkedListTest {
         LinkedList emptyList = TestUtil.createLinkedListWithValues();
         assertFalse(emptyList.remove(5));
 
-        LinkedList notExistValueList = TestUtil.createLinkedListWithValues(1, 2, 3, 4, 5);
+        LinkedList notExistValueList = TestUtil.createLinkedListWithValues(1);
         assertFalse(notExistValueList.remove(666));
         assertFalse(notExistValueList.remove(42));
+
+        LinkedList listWith1Node = TestUtil.createLinkedListWithValues(1);
+        assertEquals(1, listWith1Node.count());
+        assertTrue(listWith1Node.remove(1));
+        assertEquals(0, listWith1Node.count());
+        assertNull(listWith1Node.tail);
+        assertNull(listWith1Node.head);
 
         LinkedList linkedList = TestUtil.createLinkedListWithValues(0, 1, 2, 3, 4, 5);
         assertEquals(6, linkedList.count());

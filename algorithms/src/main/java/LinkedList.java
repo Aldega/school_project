@@ -45,6 +45,11 @@ public class LinkedList
     {
         if (isEmpty()) return false;
 
+        if (isTail(this.head) && this.head.value == _value) {
+            this.clear();
+            return true;
+        }
+
         if (this.head.value == _value) {
             this.head = this.head.next;
             return true;
