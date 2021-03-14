@@ -1,3 +1,5 @@
+package lesson_1;
+
 public class LinkedListUtils {
 
     public static LinkedList mergeTwoLinkedList(LinkedList firstList, LinkedList secondList) {
