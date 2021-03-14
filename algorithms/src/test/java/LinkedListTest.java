@@ -53,6 +53,7 @@ class LinkedListTest {
         assertEquals(3, linkedList.head.next.next.next.value);
         assertEquals(4, linkedList.head.next.next.next.next.value);
         assertEquals(5, linkedList.head.next.next.next.next.next.value);
+        assertEquals(5, linkedList.tail.value);
 
         assertTrue(linkedList.remove(0));
         assertEquals(5, linkedList.count());
@@ -61,7 +62,7 @@ class LinkedListTest {
         assertEquals(3, linkedList.head.next.next.value);
         assertEquals(4, linkedList.head.next.next.next.value);
         assertEquals(5, linkedList.head.next.next.next.next.value);
-        assertNull(linkedList.head.next.next.next.next.next);
+        assertEquals(5, linkedList.tail.value);
 
         assertTrue(linkedList.remove(3));
         assertEquals(4, linkedList.count());
@@ -69,14 +70,14 @@ class LinkedListTest {
         assertEquals(2, linkedList.head.next.value);
         assertEquals(4, linkedList.head.next.next.value);
         assertEquals(5, linkedList.head.next.next.next.value);
-        assertNull(linkedList.head.next.next.next.next);
+        assertEquals(5, linkedList.tail.value);
 
         assertTrue(linkedList.remove(5));
         assertEquals(3, linkedList.count());
         assertEquals(1, linkedList.head.value);
         assertEquals(2, linkedList.head.next.value);
         assertEquals(4, linkedList.head.next.next.value);
-        assertNull(linkedList.head.next.next.next);
+        assertEquals(4, linkedList.tail.value);
 
         LinkedList listWithRetries = TestUtil.createLinkedListWithValues(0, 1, 1, 2, 3, 1, 4, 5);
         assertTrue(listWithRetries.remove(1));
@@ -88,7 +89,7 @@ class LinkedListTest {
         assertEquals(1, listWithRetries.head.next.next.next.next.value);
         assertEquals(4, listWithRetries.head.next.next.next.next.next.value);
         assertEquals(5, listWithRetries.head.next.next.next.next.next.next.value);
-        assertNull(listWithRetries.head.next.next.next.next.next.next.next);
+        assertEquals(5, listWithRetries.tail.value);
 
         assertTrue(listWithRetries.remove(1));
         assertEquals(6, listWithRetries.count());
@@ -98,6 +99,7 @@ class LinkedListTest {
         assertEquals(1, listWithRetries.head.next.next.next.value);
         assertEquals(4, listWithRetries.head.next.next.next.next.value);
         assertEquals(5, listWithRetries.head.next.next.next.next.next.value);
+        assertEquals(5, listWithRetries.tail.value);
 
         assertTrue(listWithRetries.remove(1));
         assertEquals(5, listWithRetries.count());
@@ -106,34 +108,67 @@ class LinkedListTest {
         assertEquals(3, listWithRetries.head.next.next.value);
         assertEquals(4, listWithRetries.head.next.next.next.value);
         assertEquals(5, listWithRetries.head.next.next.next.next.value);
+        assertEquals(5, listWithRetries.tail.value);
     }
 
     @Test
     void removeAll() {
-        LinkedList list = TestUtil.createLinkedListWithValues(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 4, 5, 1, 1, 1, 1, 1);
+        LinkedList emptyList = TestUtil.createLinkedListWithValues();
+        assertEquals(0, emptyList.count());
+        emptyList.removeAll(1);
+        assertEquals(0, emptyList.count());
 
+        LinkedList listWithAllNodesIs1 = TestUtil.createLinkedListWithValues(1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        assertEquals(10, listWithAllNodesIs1.count());
+        listWithAllNodesIs1.removeAll(5);
+        assertEquals(10, listWithAllNodesIs1.count());
+        listWithAllNodesIs1.removeAll(1);
+        assertEquals(0, listWithAllNodesIs1.count());
+        assertNull(listWithAllNodesIs1.tail);
+        assertNull(listWithAllNodesIs1.head);
+
+        LinkedList listWith1Node = TestUtil.createLinkedListWithValues(1);
+        assertEquals(1, listWith1Node.count());
+        listWith1Node.removeAll(1);
+        assertEquals(0, listWith1Node.count());
+        assertNull(listWith1Node.tail);
+        assertNull(listWith1Node.head);
+
+
+        LinkedList list = TestUtil.createLinkedListWithValues(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 4, 5, 1, 1, 1, 1, 1);
         list.removeAll(1);
         assertEquals(4, list.count());
         assertEquals(2, list.head.value);
         assertEquals(3, list.head.next.value);
         assertEquals(4, list.head.next.next.value);
         assertEquals(5, list.head.next.next.next.value);
+        assertEquals(5, list.tail.value);
+
+        LinkedList list2 = TestUtil.createLinkedListWithValues(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 4, 5, 1);
+        list2.removeAll(1);
+        assertEquals(4, list2.count());
+        assertEquals(2, list2.head.value);
+        assertEquals(3, list2.head.next.value);
+        assertEquals(4, list2.head.next.next.value);
+        assertEquals(5, list2.head.next.next.next.value);
+        assertEquals(5, list2.tail.value);
     }
 
     @Test
     void clear() {
-        LinkedList linkedList = TestUtil.createLinkedListWithSize(5);
+        LinkedList linkedList = TestUtil.createLinkedListWithCount(5);
         assertEquals(5, linkedList.count());
 
         linkedList.clear();
         assertEquals(0, linkedList.count());
+        assertNull(linkedList.tail);
+        assertNull(linkedList.head);
     }
 
     @Test
     void count() {
-        for (int i = 0; i < 1000; i++) {
-            int count = i;
-            LinkedList linkedList = TestUtil.createLinkedListWithSize(count);
+        for (int count = 0; count < 10; count++) {
+            LinkedList linkedList = TestUtil.createLinkedListWithCount(count);
             assertEquals(count, linkedList.count());
         }
     }
@@ -149,6 +184,7 @@ class LinkedListTest {
         assertEquals(3, list.head.value);
         assertEquals(6, list.head.next.value);
         assertEquals(9, list.head.next.next.value);
+        assertEquals(9, list.tail.value);
 
         list.insertAfter(null, new Node(0));
         assertEquals(4, list.count());
@@ -156,6 +192,7 @@ class LinkedListTest {
         assertEquals(3, list.head.next.value);
         assertEquals(6, list.head.next.next.value);
         assertEquals(9, list.head.next.next.next.value);
+        assertEquals(9, list.tail.value);
 
         list.insertAfter(list.head.next, new Node(4));
         assertEquals(5, list.count());
@@ -164,6 +201,7 @@ class LinkedListTest {
         assertEquals(4, list.head.next.next.value);
         assertEquals(6, list.head.next.next.next.value);
         assertEquals(9, list.head.next.next.next.next.value);
+        assertEquals(9, list.tail.value);
 
         list.insertAfter(list.head.next.next.next, new Node(7));
         assertEquals(6, list.count());
@@ -173,6 +211,7 @@ class LinkedListTest {
         assertEquals(6, list.head.next.next.next.value);
         assertEquals(7, list.head.next.next.next.next.value);
         assertEquals(9, list.head.next.next.next.next.next.value);
+        assertEquals(9, list.tail.value);
 
         list.insertAfter(list.head.next.next.next.next.next, new Node(10));
         assertEquals(7, list.count());
@@ -183,5 +222,6 @@ class LinkedListTest {
         assertEquals(7, list.head.next.next.next.next.value);
         assertEquals(9, list.head.next.next.next.next.next.value);
         assertEquals(10, list.head.next.next.next.next.next.next.value);
+        assertEquals(10, list.tail.value);
     }
 }

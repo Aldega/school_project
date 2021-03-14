@@ -1,7 +1,7 @@
 
 public class TestUtil {
 
-    public static LinkedList createLinkedListWithSize(int size) {
+    public static LinkedList createLinkedListWithCount(int size) {
         LinkedList linkedList = new LinkedList();
 
         for (int i = 0; i < size; i++) {

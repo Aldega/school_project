@@ -55,6 +55,9 @@ public class LinkedList
 
         while (next != null) {
             if (next.value == _value) {
+
+                if (this.tail.equals(next)) this.tail = node;
+
                 node.next = next.next;
                 return true;
             }
@@ -67,23 +70,25 @@ public class LinkedList
 
     public void removeAll(int _value)
     {
-        if (isEmpty()) return;
-
         while (!isEmpty() && this.head.value == _value) {
             this.head = this.head.next;
+            if (this.head == null) this.tail = null;
         }
 
-        Node node = this.head;
-        Node next = node.next;
+        if (isEmpty()) return;
 
-        while (next != null) {
-            while (next != null && next.value == _value) {
-                node.next = next.next;
-                next = node.next;
+        Node node = this.head;
+        Node nextNode = node.next;
+
+        while (nextNode != null) {
+            while (nextNode != null && nextNode.value == _value) {
+                if (isTail(nextNode)) this.tail = node;
+                node.next = nextNode.next;
+                nextNode = node.next;
             }
-            if (next != null) {
-                node = next;
-                next = next.next;
+            if (nextNode != null) {
+                node = nextNode;
+                nextNode = nextNode.next;
             }
         }
     }
@@ -98,15 +103,16 @@ public class LinkedList
     {
         if (isEmpty()) return 0;
 
-        if (isTailNode(head)) return 1;
+        if (isTail(this.head)) return 1;
 
-        Node currentNode = head;
+        Node currentNode = this.head;
         int count = 1;
 
-        while (!isTailNode(currentNode)) {
+        do {
             count = count + 1;
             currentNode = currentNode.next;
-        }
+        } while (!isTail(currentNode));
+
         return count;
     }
 
@@ -114,9 +120,7 @@ public class LinkedList
     {
         if (_nodeToInsert == null) return;
 
-        if (_nodeAfter == null) {
-            // если _nodeAfter = null ,
-            // добавьте новый элемент первым в списке
+        if (_nodeAfter == null) { // если _nodeAfter = null , добавьте новый элемент первым в списке
             _nodeToInsert.next = this.head;
             this.head = _nodeToInsert;
             return;
@@ -124,18 +128,17 @@ public class LinkedList
 
         _nodeToInsert.next = _nodeAfter.next;
         _nodeAfter.next = _nodeToInsert;
-        // здесь будет ваш код вставки узла после заданного
 
+        if (isTail(_nodeAfter)) this.tail = _nodeToInsert;
     }
 
     private boolean isEmpty() {
-        return this.head == null;
+        return this.head == null && this.tail == null;
     }
 
-    private boolean isTailNode(Node node) {
-        return node.next == null;
+    private boolean isTail(Node node) {
+        return tail != null && this.tail.equals(node);
     }
-
 }
 
 class Node
