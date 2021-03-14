@@ -125,6 +125,11 @@ public class LinkedList
     {
         if (_nodeToInsert == null) return;
 
+        if (this.isEmpty()) {
+            addInTail(_nodeToInsert);
+            return;
+        }
+
         if (_nodeAfter == null) { // если _nodeAfter = null , добавьте новый элемент первым в списке
             _nodeToInsert.next = this.head;
             this.head = _nodeToInsert;

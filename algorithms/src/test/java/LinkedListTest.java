@@ -230,5 +230,21 @@ class LinkedListTest {
         assertEquals(9, list.head.next.next.next.next.next.value);
         assertEquals(10, list.head.next.next.next.next.next.next.value);
         assertEquals(10, list.tail.value);
+
+        LinkedList emptyList = TestUtil.createLinkedListWithValues();
+        Node node = new Node(1);
+        emptyList.insertAfter(null, node);
+        assertEquals(1, emptyList.count());
+        assertEquals(1, emptyList.tail.value);
+        assertEquals(1, emptyList.head.value);
+
+        node = new Node(1);
+        Node newNode = new Node(2);
+        LinkedList listWithOneNode = TestUtil.createLinkedListWithNodes(node);
+        listWithOneNode.insertAfter(null, newNode);
+        assertEquals(2, listWithOneNode.head.value);
+        assertEquals(1, listWithOneNode.tail.value);
+        assertEquals(2, listWithOneNode.count());
+
     }
 }
