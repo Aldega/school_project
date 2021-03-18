@@ -215,5 +215,52 @@ class LinkedList2Test {
 
     @Test
     void insertAfter() {
+        //case when add value in empty list
+        LinkedList2 emptyList = new LinkedList2();
+        emptyList.insertAfter(null, new Node(1));
+        assertEquals(1, emptyList.head.value);
+        assertEquals(1, emptyList.tail.value);
+        assertEquals(emptyList.head, emptyList.tail);
+        assertEquals(1, emptyList.count());
+
+        //case when one element list add in head
+        Node node1 = new Node(1);
+        Node node2 = new Node(0);
+        LinkedList2 oneElementAddInHeadList = TestUtil.createLinkedList2WithNodes(node1);
+        oneElementAddInHeadList.insertAfter(null, node2);
+        assertEquals(0, oneElementAddInHeadList.head.value);
+        assertEquals(1, oneElementAddInHeadList.head.next.value);
+        assertNull(oneElementAddInHeadList.head.next.next);
+        assertEquals(1, oneElementAddInHeadList.tail.value);
+        assertEquals(0, oneElementAddInHeadList.tail.prev.value);
+        assertNull(oneElementAddInHeadList.tail.prev.prev);
+
+        //case when one element list add in tail
+        node1 = new Node(1);
+        node2 = new Node(0);
+        LinkedList2 oneElementAddInTailList = TestUtil.createLinkedList2WithNodes(node1);
+        oneElementAddInTailList.insertAfter(node1, node2);
+        assertEquals(1, oneElementAddInTailList.head.value);
+        assertEquals(0, oneElementAddInTailList.head.next.value);
+        assertNull(oneElementAddInTailList.head.next.next);
+        assertEquals(0, oneElementAddInTailList.tail.value);
+        assertEquals(1, oneElementAddInTailList.tail.prev.value);
+        assertNull(oneElementAddInTailList.tail.prev.prev);
+
+        //case when add element in the middle
+        node1 = new Node(1);
+        node2 = new Node(2);
+        Node node3 = new Node(3);
+        LinkedList2 addElementInTheMiddle = TestUtil.createLinkedList2WithNodes(node1, node3);
+        addElementInTheMiddle.insertAfter(node1, node2);
+        assertEquals(1, addElementInTheMiddle.head.value);
+        assertEquals(2, addElementInTheMiddle.head.next.value);
+        assertEquals(3, addElementInTheMiddle.head.next.next.value);
+        assertNull(addElementInTheMiddle.head.next.next.next);
+        assertEquals(3, addElementInTheMiddle.tail.value);
+        assertEquals(2, addElementInTheMiddle.tail.prev.value);
+        assertEquals(1, addElementInTheMiddle.tail.prev.prev.value);
+        assertNull(addElementInTheMiddle.tail.prev.prev.prev);
+
     }
 }

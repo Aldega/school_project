@@ -152,10 +152,33 @@ public class LinkedList2
 
     public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
     {
-        // здесь будет ваш код вставки узла после заданного узла
+        if (_nodeToInsert == null) return;
 
-        // если _nodeAfter = null
-        // добавьте новый элемент первым в списке
+        if (this.isEmpty()) {
+            addInTail(_nodeToInsert);
+            return;
+        }
+
+        if (_nodeAfter == null) { // если _nodeAfter = null , добавьте новый элемент первым в списке
+            _nodeToInsert.next = this.head;
+            this.head = _nodeToInsert;
+            this.head.next.prev = _nodeToInsert;
+
+            return;
+        }
+
+        if (isTail(_nodeAfter)) {
+            _nodeToInsert.prev = this.tail;
+            this.tail.next = _nodeToInsert;
+            this.tail = _nodeToInsert;
+            return;
+        }
+
+        _nodeToInsert.prev = _nodeAfter;
+        _nodeToInsert.next = _nodeAfter.next;
+        _nodeAfter.next = _nodeToInsert;
+        _nodeToInsert.next.prev = _nodeToInsert;
+
     }
 
     private boolean isEmpty() {
