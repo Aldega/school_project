@@ -70,26 +70,24 @@ public class LinkedList2
             return false;
         }
 
-        if (this.head.value == _value) {
-            this.head = this.head.next;
-            this.head.prev = null;
-            return true;
-        }
+        Node node = find(_value);
+        if (node != null) {
 
-        if (this.tail.value == _value) {
-            this.tail = this.tail.prev;
-            this.tail.next = null;
-            return true;
-        }
-
-        Node node = this.head.next;
-        while (!isTail(node)) {
-            if (node.value == _value) {
-                node.prev.next = node.next;
-                node.next.prev = node.prev;
+            if (isHead(node)) {
+                this.head = this.head.next;
+                this.head.prev = null;
                 return true;
             }
-            node = node.next;
+
+            if (isTail(node)) {
+                this.tail = this.tail.prev;
+                this.tail.next = null;
+                return true;
+            }
+
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+            return true;
         }
 
         return false;
@@ -97,6 +95,35 @@ public class LinkedList2
 
     public void removeAll(int _value)
     {
+        if (isEmpty()) return;
+
+        if (isOneElementList()) {
+            if (this.head.value == _value) {
+                clear();
+                return;
+            }
+            return;
+        }
+
+        ArrayList<Node> allNodesThatMustRemoved = findAll(_value);
+        for (Node node : allNodesThatMustRemoved) {
+            if (isOneElementList() && this.head.value == _value) {
+                    clear();
+                    return;
+            }
+
+            if (isHead(node)) {
+                this.head = this.head.next;
+                this.head.prev = null;
+            } else if (isTail(node)) {
+                this.tail = this.tail.prev;
+                this.tail.next = null;
+            } else {
+                node.prev.next = node.next;
+                node.next.prev = node.prev;
+            }
+
+        }
         // здесь будет ваш код удаления всех узлов по заданному значению
     }
 
@@ -136,7 +163,11 @@ public class LinkedList2
     }
 
     private boolean isTail(Node node) {
-        return tail != null && this.tail.equals(node);
+        return this.tail != null && this.tail.equals(node);
+    }
+
+    private boolean isHead(Node node) {
+        return this.head != null && this.head.equals(node);
     }
 
     private boolean isOneElementList() {

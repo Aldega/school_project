@@ -107,12 +107,91 @@ class LinkedList2Test {
         assertEquals(2, valueNotContainInListList.tail.prev.value);
         assertEquals(1, valueNotContainInListList.tail.prev.prev.value);
         assertNull(valueNotContainInListList.tail.prev.prev.prev);
-
-
     }
 
     @Test
     void removeAll() {
+        //empty list case
+        LinkedList2 emptyList = new LinkedList2();
+        assertDoesNotThrow(() -> emptyList.removeAll(10));
+
+        //one element list contain value case
+        LinkedList2 oneElementContainValueList = TestUtil.createLinkedList2WithValues(1);
+        assertDoesNotThrow(() -> oneElementContainValueList.removeAll(1));
+        assertEquals(0, oneElementContainValueList.count());
+
+        //one element list not contain value case
+        LinkedList2 oneElementNotContainValueList = TestUtil.createLinkedList2WithValues(1);
+        assertDoesNotThrow(() -> oneElementNotContainValueList.removeAll(0));
+        assertEquals(1, oneElementNotContainValueList.count());
+        assertEquals(1, oneElementNotContainValueList.head.value);
+        assertEquals(1, oneElementNotContainValueList.tail.value);
+        assertEquals(oneElementNotContainValueList.head, oneElementNotContainValueList.tail);
+
+        //values contains in all list 1, 1, 1, 1, 1
+        LinkedList2 valuesContainsInAllList = TestUtil.createLinkedList2WithValues(1, 1, 1, 1, 1);
+        assertDoesNotThrow(() -> valuesContainsInAllList.removeAll(1));
+        assertEquals(0, valuesContainsInAllList.count());
+
+        //values contains in the head of list 1, 1, 1, 2, 3, 4
+        LinkedList2 valuesContainsInTheHeadList = TestUtil.createLinkedList2WithValues(1, 1, 1, 2, 3, 4);
+        assertDoesNotThrow(() -> valuesContainsInTheHeadList.removeAll(1));
+        assertEquals(2, valuesContainsInTheHeadList.head.value);
+        assertEquals(3, valuesContainsInTheHeadList.head.next.value);
+        assertEquals(4, valuesContainsInTheHeadList.head.next.next.value);
+        assertNull(valuesContainsInTheHeadList.head.next.next.next);
+        assertEquals(4, valuesContainsInTheHeadList.tail.value);
+        assertEquals(3, valuesContainsInTheHeadList.tail.prev.value);
+        assertEquals(2, valuesContainsInTheHeadList.tail.prev.prev.value);
+        assertNull(valuesContainsInTheHeadList.tail.prev.prev.prev);
+
+        //values contains in the tail of list 2, 3, 4, 1, 1, 1
+        LinkedList2 valuesContainsInTheTailList = TestUtil.createLinkedList2WithValues(2, 3, 4, 1, 1, 1);
+        assertDoesNotThrow(() -> valuesContainsInTheTailList.removeAll(1));
+        assertEquals(2, valuesContainsInTheTailList.head.value);
+        assertEquals(3, valuesContainsInTheTailList.head.next.value);
+        assertEquals(4, valuesContainsInTheTailList.head.next.next.value);
+        assertNull(valuesContainsInTheTailList.head.next.next.next);
+        assertEquals(4, valuesContainsInTheTailList.tail.value);
+        assertEquals(3, valuesContainsInTheTailList.tail.prev.value);
+        assertEquals(2, valuesContainsInTheTailList.tail.prev.prev.value);
+        assertNull(valuesContainsInTheTailList.tail.prev.prev.prev);
+
+        //values contains in the tail of list 2, 1, 3, 1, 4
+        LinkedList2 valuesContainsInTheMiddleList = TestUtil.createLinkedList2WithValues(2, 1, 3, 1, 4);
+        assertDoesNotThrow(() -> valuesContainsInTheMiddleList.removeAll(1));
+        assertEquals(2, valuesContainsInTheMiddleList.head.value);
+        assertEquals(3, valuesContainsInTheMiddleList.head.next.value);
+        assertEquals(4, valuesContainsInTheMiddleList.head.next.next.value);
+        assertNull(valuesContainsInTheMiddleList.head.next.next.next);
+        assertEquals(4, valuesContainsInTheMiddleList.tail.value);
+        assertEquals(3, valuesContainsInTheMiddleList.tail.prev.value);
+        assertEquals(2, valuesContainsInTheMiddleList.tail.prev.prev.value);
+        assertNull(valuesContainsInTheMiddleList.tail.prev.prev.prev);
+
+        //values contains everywhere 1, 1, 2, 1, 1, 3, 1, 1, 4, 1, 1
+        LinkedList2 valuesContainsEverywhereList = TestUtil.createLinkedList2WithValues(1, 1, 2, 1, 1, 3, 1, 1, 4, 1, 1);
+        assertDoesNotThrow(() -> valuesContainsEverywhereList.removeAll(1));
+        assertEquals(2, valuesContainsEverywhereList.head.value);
+        assertEquals(3, valuesContainsEverywhereList.head.next.value);
+        assertEquals(4, valuesContainsEverywhereList.head.next.next.value);
+        assertNull(valuesContainsEverywhereList.head.next.next.next);
+        assertEquals(4, valuesContainsEverywhereList.tail.value);
+        assertEquals(3, valuesContainsEverywhereList.tail.prev.value);
+        assertEquals(2, valuesContainsEverywhereList.tail.prev.prev.value);
+        assertNull(valuesContainsEverywhereList.tail.prev.prev.prev);
+
+        //values not contains in the list 2, 3, 4
+        LinkedList2 notContainValueList = TestUtil.createLinkedList2WithValues(2, 3, 4);
+        assertDoesNotThrow(() -> notContainValueList.removeAll(1));
+        assertEquals(2, notContainValueList.head.value);
+        assertEquals(3, notContainValueList.head.next.value);
+        assertEquals(4, notContainValueList.head.next.next.value);
+        assertNull(notContainValueList.head.next.next.next);
+        assertEquals(4, notContainValueList.tail.value);
+        assertEquals(3, notContainValueList.tail.prev.value);
+        assertEquals(2, notContainValueList.tail.prev.prev.value);
+        assertNull(notContainValueList.tail.prev.prev.prev);
     }
 
     @Test
