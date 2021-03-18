@@ -41,8 +41,40 @@ public class LinkedList2
 
     public boolean remove(int _value)
     {
-        // здесь будет ваш код удаления одного узла по заданному значению
-        return true; // если узел был удалён
+
+        if (isEmpty()) return false;
+
+        if (isOneElementList()) {
+            if (this.head.value == _value) {
+                clear();
+                return true;
+            }
+            return false;
+        }
+
+        if (this.head.value == _value) {
+            this.head = this.head.next;
+            this.head.prev = null;
+            return true;
+        }
+
+        if (this.tail.value == _value) {
+            this.tail = this.tail.prev;
+            this.tail.next = null;
+            return true;
+        }
+
+        Node node = this.head.next;
+        while (!isTail(node)) {
+            if (node.value == _value) {
+                node.prev.next = node.next;
+                node.next.prev = node.prev;
+                return true;
+            }
+            node = node.next;
+        }
+
+        return false;
     }
 
     public void removeAll(int _value)
