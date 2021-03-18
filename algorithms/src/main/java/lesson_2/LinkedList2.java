@@ -68,6 +68,18 @@ public class LinkedList2
         // если _nodeAfter = null
         // добавьте новый элемент первым в списке
     }
+
+    private boolean isEmpty() {
+        return this.head == null && this.tail == null;
+    }
+
+    private boolean isTail(Node node) {
+        return tail != null && this.tail.equals(node);
+    }
+
+    private boolean isOneElementList(Node node) {
+        return isTail(this.head);
+    }
 }
 
 class Node
