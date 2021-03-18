@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LinkedList2Test {
+class LinkedList22Test {
 
     @Test
     void find() {
@@ -24,6 +24,13 @@ class LinkedList2Test {
 
     @Test
     void clear() {
+        LinkedList2 linkedList = TestUtil.createLinkedList2WithCount(5);
+        assertEquals(5, linkedList.count());
+
+        linkedList.clear();
+        assertEquals(0, linkedList.count());
+        assertNull(linkedList.tail);
+        assertNull(linkedList.head);
     }
 
     @Test

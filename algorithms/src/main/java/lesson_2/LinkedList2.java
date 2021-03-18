@@ -52,7 +52,8 @@ public class LinkedList2
 
     public void clear()
     {
-        // здесь будет ваш код очистки всего списка
+        this.head = null;
+        this.tail = null;
     }
 
     public int count()
