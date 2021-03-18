@@ -1,6 +1,5 @@
 package lesson_2;
 
-import lesson_1.LinkedList;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +8,11 @@ class LinkedList2Test {
 
     @Test
     void find() {
+        LinkedList2 list = TestUtil.createLinkedList2WithValues(1, 2, 3);
+        assertEquals(list.head, list.find(1));
+        assertEquals(list.head.next, list.find(2));
+        assertEquals(list.tail, list.find(3));
+        assertNull(list.find(4));
     }
 
     @Test

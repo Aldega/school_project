@@ -28,7 +28,17 @@ public class LinkedList2
 
     public Node find(int _value)
     {
-        // здесь будет ваш код поиска
+        if (this.head.value == _value) return this.head;
+        if (this.tail.value == _value) return this.tail;
+
+        Node node = this.head.next;
+        while (!isTail(node)) {
+            if (node.value == _value) {
+                return node;
+            }
+            node = node.next;
+        }
+
         return null;
     }
 
