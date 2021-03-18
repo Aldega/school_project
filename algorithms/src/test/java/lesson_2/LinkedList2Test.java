@@ -2,6 +2,8 @@ package lesson_2;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedList2Test {
@@ -17,6 +19,29 @@ class LinkedList2Test {
 
     @Test
     void findAll() {
+        LinkedList2 emptyList = TestUtil.createLinkedList2WithValues();
+        ArrayList<Node> case1Result = emptyList.findAll(5);
+        assertEquals(0, case1Result.size());
+
+        LinkedList2 listWithValuesOne = TestUtil.createLinkedList2WithValues(1);
+        ArrayList<Node> case2Result = listWithValuesOne.findAll(1);
+        assertEquals(1, case2Result.size());
+
+        LinkedList2 listWithManyDifferentValues = TestUtil.createLinkedList2WithValues(0, 1, 6, 2, 6, 1, 1, 7, 0, 0, 0, 0, 1);
+        ArrayList<Node> case3Result = listWithManyDifferentValues.findAll(1);
+        assertEquals(4, case3Result.size());
+
+        ArrayList<Node> case4Result = listWithManyDifferentValues.findAll(0);
+        assertEquals(5, case4Result.size());
+
+        ArrayList<Node> case5Result = listWithManyDifferentValues.findAll(6);
+        assertEquals(2, case5Result.size());
+
+        ArrayList<Node> case6Result = listWithManyDifferentValues.findAll(7);
+        assertEquals(1, case6Result.size());
+
+        ArrayList<Node> case7Result = listWithManyDifferentValues.findAll(666);
+        assertEquals(0, case7Result.size());
     }
 
     @Test
