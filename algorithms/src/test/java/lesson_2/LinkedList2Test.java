@@ -1,10 +1,11 @@
 package lesson_2;
 
+import lesson_1.LinkedList;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LinkedList22Test {
+class LinkedList2Test {
 
     @Test
     void find() {
@@ -35,6 +36,10 @@ class LinkedList22Test {
 
     @Test
     void count() {
+        for (int count = 0; count < 10; count++) {
+            LinkedList2 linkedList = TestUtil.createLinkedList2WithCount(count);
+            assertEquals(count, linkedList.count());
+        }
     }
 
     @Test

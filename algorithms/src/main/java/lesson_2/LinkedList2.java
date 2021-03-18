@@ -58,7 +58,19 @@ public class LinkedList2
 
     public int count()
     {
-        return 0; // здесь будет ваш код подсчёта количества элементов в списке
+        if (isEmpty()) return 0;
+
+        if (isOneElementList()) return 1;
+
+        Node node = this.head.next;
+        int count = 1;
+
+        while (node != null) {
+            count = count + 1;
+            node = node.next;
+        }
+
+        return count;
     }
 
     public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
@@ -77,7 +89,7 @@ public class LinkedList2
         return tail != null && this.tail.equals(node);
     }
 
-    private boolean isOneElementList(Node node) {
+    private boolean isOneElementList() {
         return isTail(this.head);
     }
 }
