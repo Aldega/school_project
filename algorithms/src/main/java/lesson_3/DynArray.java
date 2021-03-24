@@ -38,12 +38,14 @@ public class DynArray<T>
         makeArray(newCapacity);
     }
 
+    //Сложность O(1)
     public T getItem(int index)
     {
         if (index < 0 || index >= count) throw new IndexOutOfBoundsException();
         return array[index];
     }
 
+    //Сложность в среднем O(1)
     public void append(T itm)
     {
         if (count == capacity) {
@@ -53,6 +55,7 @@ public class DynArray<T>
         count = count + 1;
     }
 
+    //Сложность в среднем O(N)
     public void insert(T itm, int index)
     {
         if (index < 0 || index > count) throw new IndexOutOfBoundsException();
@@ -68,6 +71,7 @@ public class DynArray<T>
         count = count + 1;
     }
 
+    //Сложность в среднем O(N)
     public void remove(int index)
     {
         if (index < 0 || index >= count) throw new IndexOutOfBoundsException();
