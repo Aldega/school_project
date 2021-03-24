@@ -18,8 +18,13 @@ public class DynArray<T>
 
     public void makeArray(int new_capacity)
     {
-        // array = (T[]) Array.newInstance(this.clazz, new_capacity);
-        // ваш код
+        T [] newArray = (T[]) java.lang.reflect.Array.newInstance(this.clazz, new_capacity);
+        for (int i = 0; i < count; i++) {
+            newArray[i] = array[i];
+        }
+        array = newArray;
+        capacity = new_capacity;
+
     }
 
     public T getItem(int index)
