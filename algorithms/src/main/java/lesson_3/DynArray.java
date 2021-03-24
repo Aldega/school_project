@@ -7,6 +7,8 @@ public class DynArray<T>
     public int capacity;
     Class clazz;
 
+    private final double FILL_PERCENTAGE = 0.5d;
+
     public DynArray(Class clz)
     {
         clazz = clz; // нужен для безопасного приведения типов
@@ -24,28 +26,60 @@ public class DynArray<T>
         }
         array = newArray;
         capacity = new_capacity;
+    }
 
+    private void expand() {
+        int newCapacity = capacity * 2;
+        makeArray(newCapacity);
+    }
+
+    private void compress() {
+        int newCapacity = Math.max((int) (capacity / 1.5), 16);
+        makeArray(newCapacity);
     }
 
     public T getItem(int index)
     {
-        // ваш код
-        return null;
+        if (index < 0 || index >= count) throw new IndexOutOfBoundsException();
+        return array[index];
     }
 
     public void append(T itm)
     {
-        // ваш код
+        if (count == capacity) {
+            expand();
+        }
+        array[count] = itm;
+        count = count + 1;
     }
 
     public void insert(T itm, int index)
     {
-        // ваш код
+        if (index < 0 || index > count) throw new IndexOutOfBoundsException();
+
+        if (count == capacity) {
+            expand();
+        }
+        for (int i = index; i <= count; i++) {
+            T temp = array[i];
+            array[i] = itm;
+            itm = temp;
+        }
+        count = count + 1;
     }
 
     public void remove(int index)
     {
-        // ваш код
+        if (index < 0 || index >= count) throw new IndexOutOfBoundsException();
+
+        for (int i = index; i < count - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        count = count - 1;
+
+        if (count * 1.0d / capacity < FILL_PERCENTAGE) {
+            compress();
+        }
     }
 
 }
