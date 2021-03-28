@@ -3,7 +3,6 @@ package lesson_4;
 public class StackUtils {
 
     public static boolean isBalanced(String input) {
-
         Stack<Integer> stack = new Stack<>();
         for (char ch : input.toCharArray()){
             switch (ch) {
