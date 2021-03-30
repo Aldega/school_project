@@ -22,7 +22,7 @@ public class StackUtils {
 
     public static Integer calculate(Stack<String> expression) {
         Stack<Integer> result = new Stack<>();
-        while (expression.peek() != null) {
+        while (expression.size() != 0) {
             String value = expression.pop();
             if (value.matches("\\d+")) { //if value is int number
                  result.push(Integer.parseInt(value));
