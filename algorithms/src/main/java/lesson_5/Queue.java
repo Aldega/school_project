@@ -9,15 +9,15 @@ public class Queue<T> {
         this.queue = new LinkedList<>();
     }
 
-    public void enqueue(T item) {
+    public void enqueue(T item) { // Сложность 0(1)
         queue.addLast(item);
     }
 
-    public T dequeue() {
+    public T dequeue() { // Сложность 0(1)
         return queue.pollFirst();
     }
 
-    public int size() {
+    public int size() { // Сложность 0(1)
         return queue.size();
     }
 
