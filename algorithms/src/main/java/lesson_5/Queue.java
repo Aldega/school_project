@@ -4,26 +4,26 @@ import java.util.*;
 
 public class Queue<T>
 {
+    public LinkedList<T> queue;
 
     public Queue()
     {
-        // инициализация внутреннего хранилища очереди
+        this.queue = new LinkedList<>();
     }
 
     public void enqueue(T item)
     {
-        // вставка в хвост
+        queue.addLast(item);
     }
 
     public T dequeue()
     {
-        // выдача из головы
-        return null; // null если очередь пустая
+        return queue.pollFirst();
     }
 
     public int size()
     {
-        return 0; // размер очереди
+        return queue.size();
     }
 
 }
