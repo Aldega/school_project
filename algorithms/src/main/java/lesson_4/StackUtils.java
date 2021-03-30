@@ -27,21 +27,21 @@ public class StackUtils {
             if (value.matches("\\d+")) { //if value is int number
                  result.push(Integer.parseInt(value));
             }
-            if (value.matches("[*]")) { //if value is multiply
+            if (value.equals("*")) { //if value is multiply
                 Integer calcRes = result.pop();
                 while(result.size() > 0) {
                     calcRes *= result.pop();
                 }
                 result.push(calcRes);
             }
-            if (value.matches("[+]")) { //if value is sum
+            if (value.equals("+")) { //if value is sum
                 Integer calcRes = result.pop();
                 while(result.size() > 0) {
                     calcRes += result.pop();
                 }
                 result.push(calcRes);
             }
-            if (value.matches("[=]")) { //if value is equal
+            if (value.equals("=")) { //if value is equal
                 return result.pop();
             }
         }
