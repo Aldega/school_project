@@ -12,8 +12,7 @@ public class DequeUtils {
             deque.addFront(ch);
         }
 
-        while (deque.size() > 0) {
-            if (deque.size() == 1) return true;
+        while (deque.size() > 1) {
             if (!Objects.equals(deque.removeFront(), deque.removeTail())) return false;
         }
         return true;
