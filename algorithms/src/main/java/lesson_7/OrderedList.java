@@ -25,6 +25,9 @@ public class OrderedList<T> {
     }
 
     public int compare(T v1, T v2) {
+        // -1 если v1 < v2
+        // 0 если v1 == v2
+        // +1 если v1 > v2
         if (v1 instanceof Integer && v2 instanceof Integer) {
             int value1 = (Integer) v1;
             int value2 = (Integer) v2;
@@ -51,11 +54,12 @@ public class OrderedList<T> {
 
     public void clear(boolean asc) {
         _ascending = asc;
-        // здесь будет ваш код
+        this.head = null;
+        this.tail = null;
     }
 
     public int count() {
-        return 0; // здесь будет ваш код подсчёта количества элементов в списке
+        return getAll().size();
     }
 
     ArrayList<Node<T>> getAll() { // выдать все элементы упорядоченного списка в виде стандартного списка
