@@ -25,10 +25,15 @@ public class OrderedList<T> {
     }
 
     public int compare(T v1, T v2) {
-        return 0;
-        // -1 если v1 < v2
-        // 0 если v1 == v2
-        // +1 если v1 > v2
+        if (v1 instanceof Integer && v2 instanceof Integer) {
+            int value1 = (Integer) v1;
+            int value2 = (Integer) v2;
+            return Integer.compare(value1, value2);
+        }
+        if (v1 instanceof String && v2 instanceof String) {
+            return ((String) v1).trim().compareTo(((String) v2).trim());
+        }
+        throw new RuntimeException("Unsuported type of variables");
     }
 
     public void add(T value) {
