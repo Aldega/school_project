@@ -42,24 +42,24 @@ public class OrderedList<T> {
     public void add(T value) {
         // автоматическая вставка value
         // в нужную позицию
-        if (this.head == null && this.tail == null) {
-            Node<T> node = new Node<>(value);
-            this.head = node;
-            this.tail = node;
-        }
+//        if (this.head == null && this.tail == null) {
+//            Node<T> node = new Node<>(value);
+//            this.head = node;
+//            this.tail = node;
+//        }
 
 
 
     }
 
     public Node<T> find(T val) {
-        if (isOutsideList(val)) return null;
-
-        for (Node<T> tNode : getAll()) {
-
-        }
-        
-        return null;  
+//        if (isOutsideList(val)) return null;
+//
+//        for (Node<T> tNode : getAll()) {
+//
+//        }
+//
+        return null;
     }
     
     private boolean isOutsideList(T val) {
