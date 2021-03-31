@@ -42,10 +42,32 @@ public class OrderedList<T> {
     public void add(T value) {
         // автоматическая вставка value
         // в нужную позицию
+        if (this.head == null && this.tail == null) {
+            Node<T> node = new Node<>(value);
+            this.head = node;
+            this.tail = node;
+        }
+
+
+
     }
 
     public Node<T> find(T val) {
-        return null; // здесь будет ваш код
+        if (isOutsideList(val)) return null;
+
+        for (Node<T> tNode : getAll()) {
+
+        }
+        
+        return null;  
+    }
+    
+    private boolean isOutsideList(T val) {
+        if (_ascending) { // по возрастанию
+            return compare(val, this.head.value) < 0 || compare(this.tail.value, val) < 0;
+        }
+        //по убыванию
+        return compare(val, this.head.value) > 0 || compare(this.tail.value, val) > 0;
     }
 
     public void delete(T val) {
