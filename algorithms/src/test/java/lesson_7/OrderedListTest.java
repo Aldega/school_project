@@ -48,7 +48,7 @@ class OrderedListTest {
         //asc list
         OrderedList<Integer> ascList = new OrderedList<>(true);
 
-        ascList.add(1);
+        ascList.add(1); //1
         assertEquals(1, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -59,7 +59,7 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.value);
         assertNull(ascList.tail.next);
 
-        ascList.add(5);
+        ascList.add(5); //1,5
         assertEquals(2, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -72,7 +72,7 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.prev.value);
         assertNull(ascList.tail.prev.prev);
 
-        ascList.add(3);
+        ascList.add(3); //1,3,5
         assertEquals(3, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -87,7 +87,7 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev);
 
-        ascList.add(2);
+        ascList.add(2); //1,2,3,5
         assertEquals(4, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -104,7 +104,7 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev);
 
-        ascList.add(4);
+        ascList.add(4); //1,2,3,4,5
         assertEquals(5, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -123,7 +123,7 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev);
 
-        ascList.add(0);
+        ascList.add(0); //0,1,2,3,4,5
         assertEquals(6, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -144,7 +144,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev);
 
-        ascList.add(6);
+        ascList.add(6); //0,1,2,3,4,5,6
         assertEquals(7, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -167,7 +167,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev.prev);
 
-        ascList.add(2);
+        ascList.add(2); //0,1,2,2,3,4,5,6
         assertEquals(8, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -192,7 +192,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev.prev.prev);
 
-        ascList.add(0);
+        ascList.add(0); //0,0,1,2,2,3,4,5,6
         assertEquals(9, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -218,7 +218,6 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.prev.prev.value);
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev.prev.prev.prev);
-
 
     }
 
@@ -417,6 +416,39 @@ class OrderedListTest {
 
     @Test
     void find() {
+
+        //case when list has no elements
+        OrderedList<Integer> emptyListAsc = new OrderedList<>(true);
+        assertNull(emptyListAsc.find(1));
+        OrderedList<Integer> emptyListDesc = new OrderedList<>(false);
+        assertNull(emptyListDesc.find(1));
+
+        //case when list has one element
+        OrderedList<Integer> oneElementListAsc = new OrderedList<>(true);
+        oneElementListAsc.add(1);
+        assertNull(oneElementListAsc.find(3));
+        assertEquals(1, oneElementListAsc.find(1).value);
+
+        OrderedList<Integer> oneElementListDesc = new OrderedList<>(false);
+        oneElementListDesc.add(1);
+        assertNull(oneElementListDesc.find(3));
+        assertEquals(1, oneElementListDesc.find(1).value);
+
+        //case when element more than the largest or less than the smallest
+        OrderedList<Integer> outsideValueCaseAscList = new OrderedList<>(true);
+        outsideValueCaseAscList.add(1);
+        outsideValueCaseAscList.add(3);
+        outsideValueCaseAscList.add(5);
+        assertNull(outsideValueCaseAscList.find(10));
+        assertNull(outsideValueCaseAscList.find(-10));
+
+        OrderedList<Integer> outsideValueCaseDescList = new OrderedList<>(false);
+        outsideValueCaseDescList.add(1);
+        outsideValueCaseDescList.add(3);
+        outsideValueCaseDescList.add(5);
+        assertNull(outsideValueCaseDescList.find(10));
+        assertNull(outsideValueCaseDescList.find(-10));
+
         OrderedList<Integer> ascList = new OrderedList<>(true);
         ascList.add(1);
         ascList.add(3);
@@ -427,16 +459,16 @@ class OrderedListTest {
 
         assertNull(ascList.find(0));
         assertNull(ascList.find(12));
-        assertEquals(11, ascList.find(6).value);
-        assertEquals(9, ascList.find(5).value);
-        assertEquals(7, ascList.find(4).value);
-        assertEquals(5, ascList.find(3).value);
-        assertEquals(3, ascList.find(2).value);
+        assertEquals(11, ascList.find(11).value);
+        assertEquals(9, ascList.find(9).value);
+        assertEquals(7, ascList.find(7).value);
+        assertEquals(5, ascList.find(5).value);
+        assertEquals(3, ascList.find(3).value);
         assertEquals(1, ascList.find(1).value);
-        assertNull(ascList.find(8).value);
-        assertNull(ascList.find(6).value);
-        assertNull(ascList.find(4).value);
-        assertNull(ascList.find(2).value);
+        assertNull(ascList.find(8));
+        assertNull(ascList.find(6));
+        assertNull(ascList.find(4));
+        assertNull(ascList.find(2));
 
         OrderedList<Integer> descList = new OrderedList<>(false);
         descList.add(1);
@@ -448,16 +480,16 @@ class OrderedListTest {
 
         assertNull(descList.find(0));
         assertNull(descList.find(12));
-        assertEquals(11, descList.find(6).value);
-        assertEquals(9, descList.find(5).value);
-        assertEquals(7, descList.find(4).value);
-        assertEquals(5, descList.find(3).value);
-        assertEquals(3, descList.find(2).value);
+        assertEquals(11, descList.find(11).value);
+        assertEquals(9, descList.find(9).value);
+        assertEquals(7, descList.find(7).value);
+        assertEquals(5, descList.find(5).value);
+        assertEquals(3, descList.find(3).value);
         assertEquals(1, descList.find(1).value);
-        assertNull(descList.find(8).value);
-        assertNull(descList.find(6).value);
-        assertNull(descList.find(4).value);
-        assertNull(descList.find(2).value);
+        assertNull(descList.find(8));
+        assertNull(descList.find(6));
+        assertNull(descList.find(4));
+        assertNull(descList.find(2));
     }
 
     @Test
@@ -473,6 +505,7 @@ class OrderedListTest {
         ascList.add(6);
         ascList.add(2);
         ascList.add(0);
+        //0, 0. 1, 2, 2, 3, 4, 5, 6
         assertEquals(9, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
@@ -499,6 +532,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev.prev.prev.prev);
 
+        //0. 1, 2, 2, 3, 4, 5, 6
         ascList.delete(0);
         assertEquals(8, ascList.getAll().size());
 
@@ -524,6 +558,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev.prev.prev);
 
+        //0, 1, 2, 3, 4, 5, 6
         ascList.delete(2);
         assertEquals(7, ascList.getAll().size());
 
@@ -547,6 +582,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev.prev);
 
+        //0, 1, 2, 4, 5, 6
         ascList.delete(3);
         assertEquals(6, ascList.getAll().size());
 
@@ -568,6 +604,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev.prev);
 
+        //0, 1, 2, 4, 5
         ascList.delete(6);
         assertEquals(5, ascList.getAll().size());
 
@@ -587,6 +624,7 @@ class OrderedListTest {
         assertEquals(0, ascList.tail.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev);
 
+        //1, 2, 4, 5
         ascList.delete(0);
         assertEquals(4, ascList.getAll().size());
 
@@ -604,12 +642,13 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev);
 
+        //1, 2, 5
         ascList.delete(4);
         assertEquals(3, ascList.getAll().size());
 
         assertNull(ascList.head.prev);
         assertEquals(1, ascList.head.value);
-        assertEquals(2, ascList.head.value);
+        assertEquals(2, ascList.head.next.value);
         assertEquals(5, ascList.head.next.next.value);
         assertNull(ascList.head.next.next.next);
 
@@ -619,6 +658,7 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev);
 
+        //1, 5
         ascList.delete(2);
         assertEquals(2, ascList.getAll().size());
 
@@ -632,6 +672,7 @@ class OrderedListTest {
         assertEquals(1, ascList.tail.prev.value);
         assertNull(ascList.tail.prev.prev);
 
+        //5
         ascList.delete(1);
         assertEquals(1, ascList.getAll().size());
 
@@ -643,6 +684,7 @@ class OrderedListTest {
         assertEquals(5, ascList.tail.value);
         assertNull(ascList.tail.prev);
 
+        //..
         ascList.delete(5);
         assertEquals(0, ascList.getAll().size());
 
@@ -799,7 +841,7 @@ class OrderedListTest {
 
         assertNull(descList.head.prev);
         assertEquals(5, descList.head.value);
-        assertEquals(2, descList.head.value);
+        assertEquals(2, descList.head.next.value);
         assertEquals(1, descList.head.next.next.value);
         assertNull(descList.head.next.next.next);
 
@@ -870,7 +912,6 @@ class OrderedListTest {
         assertEquals(2, ascList.tail.prev.prev.prev.value);
         assertEquals(1, ascList.tail.prev.prev.prev.prev.value);
         assertNull(ascList.tail.prev.prev.prev.prev.prev);
-        
 
         ascList.clear(false);
         assertEquals(0, ascList.count());
