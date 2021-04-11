@@ -38,6 +38,24 @@ class HashTableTest {
 
     @Test
     void seekSlot() {
+        int size = 17;
+        int step = 3;
+        HashTable hashTable = new HashTable(size, step);
+        String valueA = "a";
+        int a = hashTable.hashFun(valueA);
+        assertEquals((a + (0 * step)) % size, hashTable.seekSlot(valueA));
+        hashTable.slots[(a + (0 * step)) % size] = valueA;
+        assertEquals((a + (1 * step)) % size, hashTable.seekSlot(valueA));
+        hashTable.slots[(a + (1 * step)) % size] = valueA;
+        assertEquals((a + (2 * step)) % size, hashTable.seekSlot(valueA));
+        hashTable.slots[(a + (2 * step)) % size] = valueA;
+        assertEquals((a + (3 * step)) % size, hashTable.seekSlot(valueA));
+        hashTable.slots[(a + (3 * step)) % size] = valueA;
+        assertEquals((a + (4 * step)) % size, hashTable.seekSlot(valueA));
+        hashTable.slots[(a + (4 * step)) % size] = valueA;
+        assertEquals((a + (5 * step)) % size, hashTable.seekSlot(valueA));
+        hashTable.slots[(a + (5 * step)) % size] = valueA;
+        assertEquals(-1, hashTable.seekSlot(valueA));
     }
 
     @Test
