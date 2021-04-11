@@ -255,27 +255,30 @@ public class OrderedList<T> {
 
     public void delete(T val) {
         Node<T> deletedNode = find(val);
-        if (deletedNode != null) {
-            if (isOneElementList()) {
-                clear(this._ascending);
-                return;
-            }
-
-            if (isHead(deletedNode)) {
-                this.head = this.head.next;
-                this.head.prev = null;
-                return;
-            }
-
-            if (isTail(deletedNode)) {
-                this.tail = this.tail.prev;
-                this.tail.next = null;
-                return;
-            }
-
-            deletedNode.prev.next = deletedNode.next;
-            deletedNode.next.prev = deletedNode.prev;
+        if (deletedNode == null) {
+            return;
         }
+
+        if (isOneElementList()) {
+            clear(this._ascending);
+            return;
+        }
+
+        if (isHead(deletedNode)) {
+            this.head = this.head.next;
+            this.head.prev = null;
+            return;
+        }
+
+        if (isTail(deletedNode)) {
+            this.tail = this.tail.prev;
+            this.tail.next = null;
+            return;
+        }
+
+        deletedNode.prev.next = deletedNode.next;
+        deletedNode.next.prev = deletedNode.prev;
+
     }
 
     public void clear(boolean asc) {
