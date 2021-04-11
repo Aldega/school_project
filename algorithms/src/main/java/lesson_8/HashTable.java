@@ -13,8 +13,7 @@ public class HashTable {
     }
 
     public int hashFun(String value) {
-        // всегда возвращает корректный индекс слота
-        return 0;
+        return value.hashCode() % size;
     }
 
     public int seekSlot(String value) {
