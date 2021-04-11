@@ -20,7 +20,7 @@ public class HashTable {
         int firstSlot = hashFun(value);
         int index = firstSlot;
 
-        while (!isOverhead(index, firstSlot)) {
+        while (isNotOverhead(index, firstSlot)) {
             int slot = getSlot(index);
             if (slots[slot] == null) {
                 return slot;
@@ -31,15 +31,27 @@ public class HashTable {
     }
 
     public int put(String value) {
-        // записываем значение по хэш-функции
+        int slot = seekSlot(value);
 
-        // возвращается индекс слота или -1
-        // если из-за коллизий элемент не удаётся разместить
-        return -1;
+        if (slot != -1) {
+            slots[slot] = value;
+        }
+
+        return slot;
     }
 
     public int find(String value) {
-        // находит индекс слота со значением, или -1
+
+        int firstSlot = hashFun(value);
+        int index = firstSlot;
+
+        while (isNotOverhead(index, firstSlot)) {
+            int slot = getSlot(index);
+            if (value.equals(slots[slot])) {
+                return slot;
+            }
+            index = index + step;
+        }
         return -1;
     }
 
@@ -51,7 +63,7 @@ public class HashTable {
         return index % size;
     }
 
-    private boolean isOverhead(int index, int firstSlot) {
-        return getCicleCount(index) >= 1 && getSlot(index) >= firstSlot;
+    private boolean isNotOverhead(int index, int firstSlot) {
+        return getCicleCount(index) < 1 || getSlot(index) < firstSlot;
     }
 }
