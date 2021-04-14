@@ -13,25 +13,41 @@ class NativeDictionary<T> {
         values = (T[]) Array.newInstance(clazz, this.size);
     }
 
+    // всегда возвращает корректный индекс слота
     public int hashFun(String key) {
-        // всегда возвращает корректный индекс слота
-        return 0;
+        return key.hashCode() % size;
     }
 
+    // возвращает true если ключ имеется,
+    // иначе false
     public boolean isKey(String key) {
-        // возвращает true если ключ имеется,
-        // иначе false
-        return false;
+        if (key == null) return false;
+
+        int slot = hashFun(key);
+
+        return key.equals(slots[slot]);
     }
 
+    // гарантированно записываем
+    // значение value по ключу key
     public void put(String key, T value) {
-        // гарантированно записываем
-        // значение value по ключу key
+        if (key == null) return;
+
+        int slot = hashFun(key);
+        slots[slot] = key;
+        values[slot] = value;
     }
 
+    // возвращает value для key,
+    // или null если ключ не найден
     public T get(String key) {
-        // возвращает value для key,
-        // или null если ключ не найден
+        if (key == null) return null;
+
+        int slot = hashFun(key);
+        if (key.equals(slots[slot])) {
+            return values[slot];
+        }
         return null;
     }
+
 }
