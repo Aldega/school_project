@@ -30,8 +30,9 @@ class NativeDictionaryTest {
         dictionary.put("o", "oValue");
         dictionary.put("p", "pValue");
         dictionary.put("q", "qValue");
-        dictionary.isKey("c");
-        dictionary.isKey("r");
+
+        assertTrue(dictionary.isKey("c"));
+        assertFalse(dictionary.isKey("r"));
     }
 
     @Test
@@ -49,7 +50,6 @@ class NativeDictionaryTest {
     @Test
     void get() {
         NativeDictionary<String> dictionary = new NativeDictionary<>(17, String.class);
-
         dictionary.put("a", "aValue");
         dictionary.put("b", "bValue");
         dictionary.put("c", "cValue");
@@ -67,6 +67,7 @@ class NativeDictionaryTest {
         dictionary.put("o", "oValue");
         dictionary.put("p", "pValue");
         dictionary.put("q", "qValue");
+
         assertEquals("aValue", dictionary.get("a"));
         assertNull(dictionary.get("r"));
         assertNull(dictionary.get("rc"));
