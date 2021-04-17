@@ -7,6 +7,8 @@ class NativeDictionary<T> {
     public String[] slots;
     public T[] values;
 
+    private final int step = 3;
+
     public NativeDictionary(int sz, Class clazz) {
         size = sz;
         slots = new String[size];
@@ -23,9 +25,25 @@ class NativeDictionary<T> {
     public boolean isKey(String key) {
         if (key == null) return false;
 
-        int slot = hashFun(key);
+        int normalIndexForKey = hashFun(key);
 
-        return key.equals(slots[slot]);
+        int stepCount = 0;
+        int index = normalIndexForKey;
+        while (stepCount < size) {
+            //если по данному индексу пусто, добавляем ключ и значение в него.
+            //или если слот уже занят этим ключом
+            int slot = index % size;
+            if (slots[slot] == null) {
+                return false;
+            }
+            if (key.equals(slots[slot])) {
+                return true;
+            }
+            stepCount = stepCount + 1;
+            index = index + step;
+        }
+
+        return false;
     }
 
     // гарантированно записываем
@@ -33,9 +51,24 @@ class NativeDictionary<T> {
     public void put(String key, T value) {
         if (key == null) return;
 
-        int slot = hashFun(key);
-        slots[slot] = key;
-        values[slot] = value;
+        int normalIndexForKey = hashFun(key);
+
+        int stepCount = 0;
+        int index = normalIndexForKey;
+        while (stepCount < size) {
+            //если по данному индексу пусто, добавляем ключ и значение в него.
+            //или если слот уже занят этим ключом
+            int slot = index % size;
+            if (slots[slot] == null || key.equals(slots[slot])) {
+                slots[slot] = key;
+                values[slot] = value;
+                return;
+            }
+            stepCount = stepCount + 1;
+            index = index + step;
+        }
+
+        //если свободных мест нет, не добавляем
     }
 
     // возвращает value для key,
@@ -43,10 +76,24 @@ class NativeDictionary<T> {
     public T get(String key) {
         if (key == null) return null;
 
-        int slot = hashFun(key);
-        if (key.equals(slots[slot])) {
-            return values[slot];
+        int normalIndexForKey = hashFun(key);
+
+        int stepCount = 0;
+        int index = normalIndexForKey;
+        while (stepCount < size) {
+            //если по данному индексу пусто, добавляем ключ и значение в него.
+            //или если слот уже занят этим ключом
+            int slot = index % size;
+            if (slots[slot] == null) {
+                return null;
+            }
+            if (key.equals(slots[slot])) {
+                return values[slot];
+            }
+            stepCount = stepCount + 1;
+            index = index + step;
         }
+
         return null;
     }
 
