@@ -30,12 +30,13 @@ class NativeDictionary<T> {
         int stepCount = 0;
         int index = normalIndexForKey;
         while (stepCount < size) {
-            //если по данному индексу пусто, добавляем ключ и значение в него.
-            //или если слот уже занят этим ключом
+
             int slot = index % size;
+            // если в данном слоте пусто, то дальше не ищем
             if (slots[slot] == null) {
                 return false;
             }
+            // если в данном слоте не пусто, то возможно это наш случай
             if (key.equals(slots[slot])) {
                 return true;
             }
@@ -81,12 +82,13 @@ class NativeDictionary<T> {
         int stepCount = 0;
         int index = normalIndexForKey;
         while (stepCount < size) {
-            //если по данному индексу пусто, добавляем ключ и значение в него.
-            //или если слот уже занят этим ключом
+
             int slot = index % size;
+            // если в данном слоте пусто, то дальше не ищем
             if (slots[slot] == null) {
                 return null;
             }
+            // если в данном слоте не пусто, то возможно это наш случай
             if (key.equals(slots[slot])) {
                 return values[slot];
             }
