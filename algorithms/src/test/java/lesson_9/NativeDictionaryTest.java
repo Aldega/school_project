@@ -130,12 +130,14 @@ class NativeDictionaryTest {
     void getNotWorking() {
         NativeDictionary<String> dictionary = new NativeDictionary<>(97, String.class);
         for (int i = 0; i < 100; i++) {
-            dictionary.put("A", UUID.randomUUID().toString());
+            String value = UUID.randomUUID().toString();
+            dictionary.put("A", value);
+            assertEquals(value, dictionary.get("A"));
         }
 
         assertNull(dictionary.get("B"));
+        assertFalse(dictionary.isKey("B"));
         assertNotNull(dictionary.get("A"));
-        assertNull(dictionary.get("rc"));
     }
 
     public String findValuesForCollision(String key, int size) {
@@ -146,5 +148,14 @@ class NativeDictionaryTest {
             uuid = UUID.randomUUID().toString();
         }
         return uuid;
+    }
+
+    @Test
+    void test() {
+        NativeDictionary<Integer> nd = new NativeDictionary<Integer>(97, Integer.class);
+
+        nd.put("0123456789", 123456789);
+
+        nd.isKey("1234567890"); // ArrayIndexOutOfBoundsException
     }
 }

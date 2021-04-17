@@ -17,7 +17,7 @@ class NativeDictionary<T> {
 
     // всегда возвращает корректный индекс слота
     public int hashFun(String key) {
-        return key.hashCode() % size;
+        return Math.abs(key.hashCode()) % size;
     }
 
     // возвращает true если ключ имеется,
