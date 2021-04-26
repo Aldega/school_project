@@ -17,8 +17,7 @@ public class PowerSet {
 
     // всегда срабатывает
     public void put(String value) {
-        hashTable.put(value);
-        size++;
+        if (hashTable.put(value) != -1) size++;
     }
 
     // возвращает true если value имеется в множестве,
@@ -35,7 +34,7 @@ public class PowerSet {
 
         if (i == -1) return false;
 
-        hashTable.slots[i] = null;
+        hashTable.slots[i] = new Node(null);
         size--;
         return true;
     }
@@ -59,10 +58,10 @@ public class PowerSet {
 
         PowerSet result = new PowerSet();
 
-        String[] slots = littleSet.hashTable.slots;
-        for (String slot : slots) {
-            if (slot != null && bigSet.get(slot)) {
-                result.put(slot);
+        Node[] slots = littleSet.hashTable.slots;
+        for (Node slot : slots) {
+            if (slot != null && slot.value != null && bigSet.get(slot.value)) {
+                result.put(slot.value);
             }
         }
         return result;
@@ -73,13 +72,13 @@ public class PowerSet {
 
         PowerSet result = new PowerSet();
         if (this.size() > 0) {
-            String[] slots = this.hashTable.slots;
+            Node[] slots = this.hashTable.slots;
             System.arraycopy(slots, 0, result.hashTable.slots, 0, slots.length);
             result.size = this.size;
         }
         if (set2 != null && set2.size() > 0) {
-            for (String slot : set2.hashTable.slots) {
-                if (slot != null) result.put(slot);
+            for (Node slot : set2.hashTable.slots) {
+                if (slot != null && slot.value != null) result.put(slot.value);
             }
         }
 
@@ -91,16 +90,16 @@ public class PowerSet {
 
         PowerSet result = new PowerSet();
         if (this.size() > 0) {
-            String[] slots = this.hashTable.slots;
+            Node[] slots = this.hashTable.slots;
             System.arraycopy(slots, 0, result.hashTable.slots, 0, slots.length);
             result.size = this.size;
         }
 
         if (set2 == null || set2.size() == 0) return result;
 
-        for (String slot : set2.hashTable.slots) {
-            if (slot != null) {
-                result.remove(slot);
+        for (Node slot : set2.hashTable.slots) {
+            if (slot != null && slot.value != null) {
+                result.remove(slot.value);
             }
         }
 
@@ -115,8 +114,8 @@ public class PowerSet {
 
         if (set2.size() > this.size()) return false;
 
-        for (String slot : set2.hashTable.slots) {
-            if (slot != null && !this.get(slot)) return false;
+        for (Node slot : set2.hashTable.slots) {
+            if (slot != null && !this.get(slot.value)) return false;
         }
         return true;
     }
@@ -135,12 +134,12 @@ public class PowerSet {
 class HashTable {
     public int size;
     public int step;
-    public String[] slots;
+    public Node[] slots;
 
     public HashTable() {
         size = 20_000;
         step = 3;
-        slots = new String[size];
+        slots = new Node[size];
         for (int i = 0; i < size; i++) slots[i] = null;
     }
 
@@ -159,9 +158,11 @@ class HashTable {
             //если по данному индексу пусто, добавляем ключ и значение в него.
             //или если слот уже занят этим ключом
             int slot = index % size;
-            if (slots[slot] == null || value.equals(slots[slot])) {
-                return slot;
-            }
+
+            if (slots[slot] == null || slots[slot].value == null) return slot;
+
+            if (value.equals(slots[slot].value)) return -1;
+
             stepCount = stepCount + 1;
             index = index + step;
         }
@@ -173,7 +174,7 @@ class HashTable {
         int slot = seekSlot(value);
 
         if (slot != -1) {
-            slots[slot] = value;
+            slots[slot] = new Node(value);
         }
 
         return slot;
@@ -194,7 +195,7 @@ class HashTable {
                 return -1;
             }
             // если в данном слоте не пусто, то возможно это наш случай
-            if (value.equals(slots[slot])) {
+            if (value.equals(slots[slot].value)) {
                 return slot;
             }
             stepCount = stepCount + 1;
@@ -202,5 +203,12 @@ class HashTable {
         }
 
         return -1;
+    }
+}
+
+class Node {
+    public final String value;
+    public Node(String _value) {
+        value = _value;
     }
 }
