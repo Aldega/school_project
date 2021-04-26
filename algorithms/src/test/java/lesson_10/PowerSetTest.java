@@ -299,6 +299,11 @@ class PowerSetTest {
         assertFalse(powerSet1.isSubset(powerSet1.union(powerSet2)));
         //полный1 подмножество полный1+полный2
         assertTrue(powerSet1.union(powerSet2).isSubset(powerSet1));
+
+        powerSet1.remove(list1.get(1));
+
+        //полный1 подмножество полный1+полный2 (c учётом удаления)
+        assertTrue(powerSet1.union(powerSet2).isSubset(powerSet1));
     }
 
     private List<String> createListOfUniqStrings(int size) {

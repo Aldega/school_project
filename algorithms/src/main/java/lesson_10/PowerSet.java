@@ -115,7 +115,7 @@ public class PowerSet {
         if (set2.size() > this.size()) return false;
 
         for (Node slot : set2.hashTable.slots) {
-            if (slot != null && !this.get(slot.value)) return false;
+            if (slot != null && slot.value != null && !this.get(slot.value)) return false;
         }
         return true;
     }
