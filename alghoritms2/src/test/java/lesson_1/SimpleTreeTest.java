@@ -45,6 +45,10 @@ class SimpleTreeTest {
         simpleTree.AddChild(root, level1A);
         simpleTree.AddChild(root, level1B);
         simpleTree.AddChild(root, level1C);
+        simpleTree.AddChild(root, level1C);
+        simpleTree.AddChild(root, level1C);
+        simpleTree.AddChild(root, level1C);
+        simpleTree.AddChild(root, level1C);
         simpleTree.AddChild(level1C, level2CA);
         simpleTree.AddChild(level1C, level2CB);
         simpleTree.AddChild(level1C, level2CC);

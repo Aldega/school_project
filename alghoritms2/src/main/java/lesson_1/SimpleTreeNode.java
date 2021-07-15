@@ -40,12 +40,7 @@ class SimpleTree<T>
     public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
     {
 
-        List<SimpleTreeNode<T>> childrens = NodeToDelete.Parent.Children;
-        for (int i = 0; i < childrens.size(); i++) {
-            if (childrens.get(i).equals(NodeToDelete) && childrens.get(i).hashCode() == NodeToDelete.hashCode()) {
-                childrens.remove(i);
-            }
-        }
+        NodeToDelete.Parent.Children.removeIf(next -> next.equals(NodeToDelete) && next.hashCode() == NodeToDelete.hashCode());
         NodeToDelete.Parent = null;
         // ваш код удаления существующего узла NodeToDelete
     }
