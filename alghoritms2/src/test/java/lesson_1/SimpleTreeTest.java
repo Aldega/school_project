@@ -33,6 +33,7 @@ class SimpleTreeTest {
     void deleteNode() {
         SimpleTreeNode<String> root = new SimpleTreeNode<>("Root", null);
         SimpleTree<String> simpleTree = new SimpleTree<>(root);
+        assertEquals(1, simpleTree.Count());
         SimpleTreeNode<String> level1A = new SimpleTreeNode<>("level1A", root);
         SimpleTreeNode<String> level1B = new SimpleTreeNode<>("level1B", root);
         SimpleTreeNode<String> level1C = new SimpleTreeNode<>("level1C", root);
@@ -42,25 +43,56 @@ class SimpleTreeTest {
         SimpleTreeNode<String> level3CCA = new SimpleTreeNode<>("level3CCA", level2CC);
         SimpleTreeNode<String> level3CCB = new SimpleTreeNode<>("level3CCB", level2CC);
         SimpleTreeNode<String> level3CCC = new SimpleTreeNode<>("level3CCC", level2CC);
+
+        SimpleTreeNode<String> level2AA = new SimpleTreeNode<>("level2AA", level1A);
+        SimpleTreeNode<String> level2AB = new SimpleTreeNode<>("level2AB", level1A);
+        SimpleTreeNode<String> level2AC = new SimpleTreeNode<>("level2AC", level1A);
+
         simpleTree.AddChild(root, level1A);
+        assertEquals(2, simpleTree.Count());
+
         simpleTree.AddChild(root, level1B);
+        assertEquals(3, simpleTree.Count());
+
         simpleTree.AddChild(root, level1C);
-        simpleTree.AddChild(root, level1C);
-        simpleTree.AddChild(root, level1C);
-        simpleTree.AddChild(root, level1C);
-        simpleTree.AddChild(root, level1C);
+        assertEquals(4, simpleTree.Count());
+
         simpleTree.AddChild(level1C, level2CA);
+        assertEquals(5, simpleTree.Count());
+
         simpleTree.AddChild(level1C, level2CB);
+        assertEquals(6, simpleTree.Count());
+
         simpleTree.AddChild(level1C, level2CC);
+        assertEquals(7, simpleTree.Count());
+
         simpleTree.AddChild(level2CC, level3CCA);
+        assertEquals(8, simpleTree.Count());
+
         simpleTree.AddChild(level2CC, level3CCB);
+        assertEquals(9, simpleTree.Count());
+
         simpleTree.AddChild(level2CC, level3CCC);
+        assertEquals(10, simpleTree.Count());
+
+        simpleTree.AddChild(level1A, level2AA);
+        assertEquals(11, simpleTree.Count());
+        simpleTree.AddChild(level1A, level2AB);
+        assertEquals(12, simpleTree.Count());
+        simpleTree.AddChild(level1A, level2AC);
+        assertEquals(13, simpleTree.Count());
+
+
+
+        simpleTree.DeleteNode(level2AC);
+        assertEquals(12, simpleTree.Count());
+
+        simpleTree.DeleteNode(level2CC);
+        assertEquals(8, simpleTree.Count());
 
         simpleTree.DeleteNode(level1C);
-        assertEquals(2, simpleTree.Root.Children.size());
-        assertEquals(level1A, simpleTree.Root.Children.get(0));
-        assertEquals(level1B, simpleTree.Root.Children.get(1));
-        assertNull(level1C.Parent);
+        assertEquals(5, simpleTree.Count());
+
     }
 
     @Test
